@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- Live Age Counter ---
-    const birthDate = new Date('2006-08-14T00:00:00');
+    const birthDate = new Date('2006-10-09T00:00:00');
     const countdownElement = document.getElementById('countdown');
 
     function updateAge() {
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         countdownElement.innerHTML = `${years}y ${months}m ${days}d <br> ${hours}h ${minutes}m ${seconds}s`;
     }
+
     setInterval(updateAge, 1000);
     updateAge();
 
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const scroller = document.getElementById('hall-of-fame-scroller');
     const scrollLeftBtn = document.getElementById('scroll-left-btn');
     const scrollRightBtn = document.getElementById('scroll-right-btn');
+
     if (scroller && scrollLeftBtn && scrollRightBtn) {
         const card = scroller.querySelector('.snap-center');
         const cardWidth = card.offsetWidth + parseInt(getComputedStyle(card.parentElement).gap);
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollRightBtn.addEventListener('click', () => {
             scroller.scrollBy({ left: cardWidth, behavior: 'smooth' });
         });
+
         scrollLeftBtn.addEventListener('click', () => {
             scroller.scrollBy({ left: -cardWidth, behavior: 'smooth' });
         });
@@ -69,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         videoUploadInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
+
             if (file) {
                 const videoURL = URL.createObjectURL(file);
                 videoPlayer.src = videoURL;
@@ -79,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
     // --- Sakura Petal Animation ---
     const canvas = document.getElementById('sakura-canvas');
+
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let petals = [];
@@ -91,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
+
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
@@ -114,11 +119,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.ySpeed = 1 + Math.random() * 1;
                 this.flip = Math.random();
             }
+
             ctx.globalAlpha = this.opacity;
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
-            ctx.bezierCurveTo(this.x + this.w / 2, this.y - this.h / 2, this.x + this.w, this.y, this.x + this.w / 2, this.y + this.h / 2);
-            ctx.bezierCurveTo(this.x, this.y + this.h, this.x - this.w / 2, this.y, this.x, this.y);
+
+            ctx.bezierCurveTo(
+                this.x + this.w / 2,
+                this.y - this.h / 2,
+                this.x + this.w,
+                this.y,
+                this.x + this.w / 2,
+                this.y + this.h / 2
+            );
+
+            ctx.bezierCurveTo(
+                this.x,
+                this.y + this.h,
+                this.x - this.w / 2,
+                this.y,
+                this.x,
+                this.y
+            );
+
             ctx.closePath();
             ctx.fillStyle = '#FFB7C5';
             ctx.fill();
@@ -133,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function createPetals() {
             petals = [];
+
             for (let i = 0; i < numPetals; i++) {
                 petals.push(new Petal());
             }
@@ -140,9 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             petals.forEach(petal => {
                 petal.update();
             });
+
             requestAnimationFrame(animate);
         }
 
@@ -150,4 +176,3 @@ document.addEventListener('DOMContentLoaded', function() {
         animate();
     }
 });
-
